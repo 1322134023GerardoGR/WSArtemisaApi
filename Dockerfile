@@ -12,4 +12,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV PORT=5000
-ENTRYPOINT ["dotnet", "WSArtemisaUPT.dll"]
+ENTRYPOINT ["dotnet", "WSArtemisaApi.dll"]

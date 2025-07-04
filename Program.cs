@@ -1,7 +1,34 @@
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using WSArtemisaApi.Data;
 using WSArtemisaApi.Helpers;
+using WSArtemisaApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var secretKey = builder.Configuration["JwtSettings:SecretKey"];
+        var key = Encoding.ASCII.GetBytes(secretKey);
+
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
 
 builder.Services.AddControllers(options =>
 {
@@ -19,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

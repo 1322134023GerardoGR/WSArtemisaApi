@@ -4,7 +4,7 @@ using WSArtemisaApi.Services;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("/[controller]")]
+    [Route("auth/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
