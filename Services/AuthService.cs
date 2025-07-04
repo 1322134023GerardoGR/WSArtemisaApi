@@ -28,6 +28,9 @@ namespace WSArtemisaApi.Services
                 .FirstOrDefaultAsync(x => x.Email == user.Email);
             if (existingUser != null) throw new Exception("Usuario ya existe.");
 
+            user.CreatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
+
             user.Password = BCrypt.Net.BCrypt.HashPassword(password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -43,7 +46,7 @@ namespace WSArtemisaApi.Services
 
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 throw new Exception("Contraseña incorrecta.");
-
+            user.UpdatedAt = DateTime.UtcNow;
             return GenerateJwtToken(user);
         }
 
