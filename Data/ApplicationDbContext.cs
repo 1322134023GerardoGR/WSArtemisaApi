@@ -78,6 +78,7 @@ namespace WSArtemisaApi.Data
                 entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
                 entity.Property(e => e.DeletedAt).HasColumnName("deleted_at");
             });
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -24,13 +24,11 @@ namespace WSArtemisaApi.Services
 
         public async Task<string> RegisterAsync(User user, string password)
         {
-            // Verificar si el usuario ya existe
             var existingUser = await _context.Users
                 .FirstOrDefaultAsync(x => x.Email == user.Email);
             if (existingUser != null) throw new Exception("Usuario ya existe.");
 
-            // Guardar usuario en base de datos
-            user.Password = BCrypt.Net.BCrypt.HashPassword(password); // Encriptar la contraseña
+            user.Password = BCrypt.Net.BCrypt.HashPassword(password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -43,7 +41,6 @@ namespace WSArtemisaApi.Services
                 .FirstOrDefaultAsync(x => x.Email == email);
             if (user == null) throw new Exception("Usuario no encontrado.");
 
-            // Verificar la contraseña
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                 throw new Exception("Contraseña incorrecta.");
 
