@@ -30,8 +30,8 @@ namespace WSArtemisaApi.Services
 
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;
-
             user.Password = BCrypt.Net.BCrypt.HashPassword(password);
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

@@ -18,7 +18,14 @@ namespace WSArtemisaApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] AuthModel model)
         {
-            var user = new User { Email = model.Email };
+            var user = new User
+            {
+                Email = model.Email,
+                Name = model.Name,
+                LastName = model.LastName,
+                CardBrandId = model.CardBrandId,
+                Wallet = model.Wallet
+            };
             var token = await _authService.RegisterAsync(user, model.Password);
             return Ok(new { Token = token });
         }

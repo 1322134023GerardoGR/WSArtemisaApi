@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WSArtemisaApi.Models
@@ -10,41 +11,29 @@ namespace WSArtemisaApi.Models
         [Column("id")]
         public Guid Id { get; set; }
 
-        [Column("seller_id")]
-        public string SellerID { get; set; }
+        [Column("legal_name")]
+        public string LegalName { get; set; }
 
-        [Column("seller_legal_name")]
-        public string SellerLegalName { get; set; }
+        [Column("rfc")]
+        public string Rfc { get; set; }
 
-        [Column("seller_dba_name")]
-        public string SellerDBAName { get; set; }
+        [Column("identifier")]
+        public string Identifier { get; set; }
 
-        [Column("seller_mcc")]
-        public string SellerMCC { get; set; }
+        [Column("phone_number")]
+        public string PhoneNumber { get; set; }
 
-        [Column("seller_url")]
-        public string SellerURL { get; set; }
+        [Column("email")]
+        public string Email { get; set; }
 
-        [Column("seller_business_registration_number")]
-        public string SellerBusinessRegistrationNumber { get; set; }
-
-        [Column("seller_business_phone_number")]
-        public string SellerBusinessPhoneNumber { get; set; }
-
-        [Column("seller_email_address")]
-        public string SellerEmailAddress { get; set; }
-
-        [Column("seller_currency_code")]
-        public string SellerCurrencyCode { get; set; }
-
-        [Column("seller_status")]
-        public string SellerStatus { get; set; }
+        [Column("status")]
+        public string Status { get; set; }
 
         [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         [Column("deleted_at")]
         public DateTime? DeletedAt { get; set; }

@@ -11,46 +11,37 @@ namespace WSArtemisaApi.Models
         [Column("id")]
         public Guid Id { get; set; }
 
-        [Column("account")]
-        public string Account { get; set; }
+        [Column("from_user_id")]
+        public Guid FromUserId { get; set; } 
 
-        [Column("issuer")]
-        public string Issuer { get; set; }
+        [Column("to_user_id")]
+        public Guid ToUserId { get; set; } 
 
         [Column("amount")]
-        public decimal Amount { get; set; }
+        public decimal Amount { get; set; } 
 
-        [Column("operation_type")]
-        public string OperationType { get; set; }
+        [Column("transaction_time")]
+        public DateTime TransactionTime { get; set; } = DateTime.UtcNow;
 
         [Column("status")]
         public string Status { get; set; }
 
-        [Column("response_code")]
-        public string ResponseCode { get; set; }
+        [Column("from_card_brand_id")]
+        public Guid FromCardBrandId { get; set; }
 
-        [Column("response")]
-        public string Response { get; set; }
+        [Column("to_card_brand_id")]
+        public Guid ToCardBrandId { get; set; } 
 
-        [Column("branch")]
-        public string Branch { get; set; }
+        [ForeignKey("FromCardBrandId")]
+        public virtual CardBrand FromCardBrand { get; set; }
 
-        [Column("pos")]
-        public string POS { get; set; }
+        [ForeignKey("ToCardBrandId")]
+        public virtual CardBrand ToCardBrand { get; set; }
 
-        [Column("reference")]
-        public string Reference { get; set; }
+        [ForeignKey("FromUserId")]
+        public virtual User FromUser { get; set; }
 
-        [Column("transaction_date")]
-        public DateTime TransactionDate { get; set; }
-
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
-        [Column("deleted_at")]
-        public DateTime? DeletedAt { get; set; }
+        [ForeignKey("ToUserId")]
+        public virtual User ToUser { get; set; }
     }
 }
