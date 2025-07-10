@@ -8,7 +8,7 @@ using WSArtemisaApi.DTOs;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("api/v1/profile")]
+    [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class ProfileController : ControllerBase
