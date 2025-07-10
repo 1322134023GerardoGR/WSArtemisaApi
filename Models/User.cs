@@ -19,10 +19,10 @@ namespace WSArtemisaApi.Models
 
        
         [Column("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column("last_name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Column("card_brand_id")]
         public Guid CardBrandId { get; set; } 

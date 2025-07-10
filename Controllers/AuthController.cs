@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WSArtemisaApi.Models;
+using WSArtemisaApi.DTOs;
 using WSArtemisaApi.Services;
+using WSArtemisaApi.Models;
 
 namespace WSArtemisaApi.Controllers
 {
@@ -16,24 +17,25 @@ namespace WSArtemisaApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] AuthModel model)
+        public async Task<IActionResult> Register([FromBody] AuthRequestDTO dto)
         {
             var user = new User
             {
-                Email = model.Email,
-                Name = model.Name,
-                LastName = model.LastName,
-                CardBrandId = model.CardBrandId,
-                Wallet = model.Wallet
+                Email = dto.Email,
+                Name = dto.Name,
+                LastName = dto.LastName,
+                CardBrandId = dto.CardBrandId,
+                Wallet = dto.Wallet
             };
-            var token = await _authService.RegisterAsync(user, model.Password);
+
+            var token = await _authService.RegisterAsync(user, dto.Password);
             return Ok(new { Token = token });
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthModel model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO dto)
         {
-            var token = await _authService.LoginAsync(model.Email, model.Password);
+            var token = await _authService.LoginAsync(dto.Email, dto.Password);
             return Ok(new { Token = token });
         }
     }

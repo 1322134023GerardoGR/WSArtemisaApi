@@ -1,4 +1,8 @@
-﻿namespace WSArtemisaApi.Models
+﻿namespace WSArtemisaApi.DTOs
 {
-    
+    public class LoginRequestDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
 }
