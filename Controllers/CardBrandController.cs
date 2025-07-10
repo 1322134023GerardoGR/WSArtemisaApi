@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WSArtemisaApi.Services;
+using WSArtemisaApi.DTOs;
 using WSArtemisaApi.Models;
-using System;
-using System.Threading.Tasks;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("/[controller]")]
+    [Route("api/v1/cardbrands")]
     [ApiController]
     public class CardBrandController : ControllerBase
     {
@@ -17,21 +16,21 @@ namespace WSArtemisaApi.Controllers
             _cardBrandService = cardBrandService;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateCardBrand([FromBody] CreateCardBrandDTO dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.BrandName))
+                return BadRequest("El nombre de la marca de tarjeta es obligatorio.");
+
+            var cardBrand = await _cardBrandService.CreateCardBrandAsync(dto.BrandName);
+            return CreatedAtAction(nameof(GetAllCardBrands), new { id = cardBrand.Id }, cardBrand);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllCardBrands()
         {
             var cardBrands = await _cardBrandService.GetAllCardBrandsAsync();
             return Ok(cardBrands);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateCardBrand([FromBody] string brandName)
-        {
-            if (string.IsNullOrWhiteSpace(brandName))
-                return BadRequest("El nombre de la marca de tarjeta es obligatorio.");
-
-            var cardBrand = await _cardBrandService.CreateCardBrandAsync(brandName);
-            return CreatedAtAction(nameof(GetAllCardBrands), new { id = cardBrand.Id }, cardBrand);
         }
 
         [HttpDelete("{id}")]
@@ -43,7 +42,7 @@ namespace WSArtemisaApi.Controllers
 
             return NoContent();
         }
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCardBrand(Guid id, [FromBody] string brandName)
         {
