@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("/branch")]
+    [Route("/[controller]")]
     [ApiController]
     public class BranchController : ControllerBase
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("/cardbrands")]
+    [Route("/[controller]")]
     [ApiController]
     public class CardBrandController : ControllerBase
     {
