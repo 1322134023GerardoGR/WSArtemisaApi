@@ -57,7 +57,14 @@ namespace WSArtemisaApi.Services
 
         public async Task<IQueryable<Transaction>> GetRecentTransactionsAsync()
         {
-            return _context.Transactions.OrderByDescending(t => t.TransactionTime).Take(10);
+            return (IQueryable<Transaction>)await _context.Transactions
+                .Include(t => t.FromUser)
+                .Include(t => t.ToUser)
+                .Include(t => t.FromCardBrand)
+                .Include(t => t.ToCardBrand)
+                .OrderByDescending(t => t.TransactionTime)
+                .Take(10)
+                .ToListAsync();
         }
 
         public async Task<IQueryable<Transaction>> GetTransactionsByUserAsync(Guid userId)

@@ -36,7 +36,31 @@ namespace WSArtemisaApi.Controllers
         public async Task<IActionResult> GetRecentTransactions()
         {
             var transactions = await _transactionService.GetRecentTransactionsAsync();
-            return Ok(transactions);
+            return Ok(transactions.Select(t => new
+            {
+                t.Id,
+                t.FromUserId,
+                t.ToUserId,
+                t.Amount,
+                t.TransactionTime,
+                t.Status,
+                t.FromCardBrandId,
+                t.ToCardBrandId,
+                FromCardBrand = t.FromCardBrand.BrandName,
+                ToCardBrand = t.ToCardBrand.BrandName,
+                FromUser = new
+                {
+                    t.FromUser.Name,
+                    t.FromUser.LastName,
+                    t.FromUser.Email
+                },
+                ToUser = new
+                {
+                    t.ToUser.Name,
+                    t.ToUser.LastName,
+                    t.ToUser.Email
+                }
+            }));
         }
 
         [HttpGet("history")]
