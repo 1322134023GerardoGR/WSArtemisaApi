@@ -5,7 +5,7 @@ using WSArtemisaApi.Models;
 
 namespace WSArtemisaApi.Controllers
 {
-    [Route("api/v1/cardbrands")]
+    [Route("/[controller]")]
     [ApiController]
     public class CardBrandController : ControllerBase
     {
