@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WSArtemisaApi.Data;
-using WSArtemisaApi.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WSArtemisaApi.Data;
+using WSArtemisaApi.Models;
 
 namespace WSArtemisaApi.Services
 {
@@ -57,6 +58,13 @@ namespace WSArtemisaApi.Services
         public async Task<IQueryable<Transaction>> GetRecentTransactionsAsync()
         {
             return _context.Transactions.OrderByDescending(t => t.TransactionTime).Take(10);
+        }
+
+        public async Task<IQueryable<Transaction>> GetTransactionsByUserAsync(Guid userId)
+        {
+            return _context.Transactions
+                .Where(t => t.FromUserId == userId || t.ToUserId == userId)
+                .OrderByDescending(t => t.TransactionTime);
         }
     }
 }

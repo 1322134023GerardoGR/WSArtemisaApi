@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WSArtemisaApi.Services;
-using WSArtemisaApi.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WSArtemisaApi.Models;
+using WSArtemisaApi.Services;
 
 namespace WSArtemisaApi.Controllers
 {
@@ -35,6 +36,20 @@ namespace WSArtemisaApi.Controllers
         public async Task<IActionResult> GetRecentTransactions()
         {
             var transactions = await _transactionService.GetRecentTransactionsAsync();
+            return Ok(transactions);
+        }
+
+        [HttpGet("history")]
+        [Authorize]
+        public async Task<IActionResult> GetTransactionHistory()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("Usuario no autenticado.");
+            }
+
+            var transactions = await _transactionService.GetTransactionsByUserAsync(Guid.Parse(userId));
             return Ok(transactions);
         }
     }

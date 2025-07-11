@@ -20,7 +20,6 @@ namespace WSArtemisaApi.Controllers
             _profileService = profileService;
         }
 
-        // Obtener los datos del perfil del usuario autenticado
         [HttpGet]
         public async Task<IActionResult> GetProfile()
         {
