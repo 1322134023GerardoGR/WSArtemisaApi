@@ -60,6 +60,7 @@ namespace WSArtemisaApi.Data
                 entity.Property(e => e.Password).HasColumnName("password");
                 entity.Property(e => e.Name).HasColumnName("name");
                 entity.Property(e => e.LastName).HasColumnName("last_name");
+                entity.Property(e => e.PhotoPath).HasColumnName("photo_path");
                 entity.Property(e => e.CardBrandId).HasColumnName("card_brand_id");
                 entity.Property(e => e.Wallet).HasColumnName("wallet");
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("CURRENT_TIMESTAMP");

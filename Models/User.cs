@@ -17,15 +17,17 @@ namespace WSArtemisaApi.Models
         [Column("password")]
         public string Password { get; set; }
 
-       
         [Column("name")]
         public string? Name { get; set; }
 
         [Column("last_name")]
         public string? LastName { get; set; }
 
+        [Column("photo_path")]
+        public string? PhotoPath { get; set; }
+
         [Column("card_brand_id")]
-        public Guid CardBrandId { get; set; } 
+        public Guid CardBrandId { get; set; }
 
         [Column("wallet")]
         public decimal Wallet { get; set; }

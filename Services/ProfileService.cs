@@ -21,17 +21,17 @@ namespace WSArtemisaApi.Services
             return user;
         }
 
-        public async Task<User> UpdateProfileAsync(Guid userId, string name, string lastName, Guid? cardBrandId, decimal? wallet)
+        public async Task<User> UpdateProfileAsync(Guid userId, string? name, string? lastName, Guid? cardBrandId, decimal? wallet, string? photoPath)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
                 throw new Exception("Usuario no encontrado.");
 
-            // Actualizamos los campos que se pasen en el DTO
             user.Name = name ?? user.Name;
             user.LastName = lastName ?? user.LastName;
             user.CardBrandId = cardBrandId ?? user.CardBrandId;
             user.Wallet = wallet ?? user.Wallet;
+            user.PhotoPath = photoPath ?? user.PhotoPath;
             user.UpdatedAt = DateTime.UtcNow;
 
             _context.Users.Update(user);
